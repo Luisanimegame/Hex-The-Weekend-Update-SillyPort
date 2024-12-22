@@ -1,5 +1,4 @@
-import lime.app.Application;
-import polymod.Polymod.PolymodError;
+/*import lime.app.Application;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.system.debug.log.LogStyle;
@@ -467,4 +466,4 @@ class DebugLogWriter
 		haxe.Log.trace(msg, null);
 		#end
 	}
-}
+}*/
