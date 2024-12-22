@@ -198,8 +198,7 @@ class Paths
 
 	inline static public function video(key:String, ?library:String)
 	{
-		trace('assets/videos/$key.mp4');
-		return getPath('videos/$key.mp4', BINARY, library);
+		return Asset2File.getPath('assets/videos/$key.mp4');
 	}
 
 	static public function listSongsToCache()

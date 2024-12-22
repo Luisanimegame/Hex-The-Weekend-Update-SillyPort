@@ -48,17 +48,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		MasterObjectLoader.mutex = new Mutex();
-		// TODO: Refactor this to use OpenFlAssets.
-		#if FEATURE_FILESYSTEM
-		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
-			sys.FileSystem.createDirectory(Sys.getCwd() + "/assets/replays");
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
 		#end
-
-		@:privateAccess
-		{
-			Debug.logTrace("We loaded " + openfl.Assets.getLibrary("default").assetsLoaded + " assets into the default library");
-		}
 
 		FlxG.autoPause = false;
 

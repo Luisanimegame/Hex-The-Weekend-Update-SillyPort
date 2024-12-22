@@ -85,30 +85,30 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		#if !cpp
 		framerate = 60;
-		#end
-
+		
+		#if desktop 
+        initialState = Caching;
+        #elseif android
+        initialState = TitleState;
+        #end
+		
 		// Run this first so we can see logs.
 		Debug.onInitProgram();
 
 		// Gotta run this before any assets get loaded.
 		ModCore.initialize();
 
-		#if !mobile
 		fpsCounter = new KadeEngineFPS(10, 3, 0xFFFFFF);
 		bitmapFPS = ImageOutline.renderImage(fpsCounter, 1, 0x000000, true);
 		bitmapFPS.smoothing = true;
-		#end
-
-		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
+		
+		game = new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
-		#if !mobile
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
-		#end
-
+		
 		// Finish up loading debug tools.
 		Debug.onGameStart();
 	}

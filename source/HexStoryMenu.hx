@@ -115,6 +115,10 @@ class HexStoryMenu extends HexMenuState
 		{
 			getItemByName("windowDown").changeOutGraphic("story/window_down_1");
 		}
+		
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		Debug.logTrace('bruh!');
 	}
@@ -157,17 +161,17 @@ class HexStoryMenu extends HexMenuState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ESCAPE && !stopSelecting)
+		if (controls.BACK && !stopSelecting)
 			switchState(new HexMainMenu(HexMenuState.loadHexMenu("main-menu")));
 
-		if (FlxG.keys.justPressed.DOWN && !stopSelecting)
+		if (controls.DOWN_P && !stopSelecting)
 		{
 			selectedIndex++;
 			if (selectedIndex > 1)
 				selectedIndex = 0;
 			select();
 		}
-		if (FlxG.keys.justPressed.UP && !stopSelecting)
+		if (controls.UP_P && !stopSelecting)
 		{
 			selectedIndex--;
 			if (selectedIndex < 0)
@@ -176,7 +180,7 @@ class HexStoryMenu extends HexMenuState
 		}
 		if (selectedIndex == 0)
 		{
-			if (FlxG.keys.justPressed.LEFT && !stopSelecting)
+			if (controls.LEFT_P && !stopSelecting)
 			{
 				curDifficulty--;
 				if (curDifficulty < 0)
@@ -185,7 +189,7 @@ class HexStoryMenu extends HexMenuState
 				changeDiff();
 			}
 
-			if (FlxG.keys.justPressed.RIGHT && !stopSelecting)
+			if (controls.RIGHT_P && !stopSelecting)
 			{
 				curDifficulty++;
 				if (curDifficulty > 2)
@@ -195,7 +199,7 @@ class HexStoryMenu extends HexMenuState
 			}
 		}
 
-		if (FlxG.keys.justPressed.ENTER && !stopSelecting)
+		if (controls.ACCEPT && !stopSelecting)
 		{
 			var diff:String = ["-easy", "", "-hard"][curDifficulty];
 			if (selectedIndex == 1)

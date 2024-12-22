@@ -110,6 +110,10 @@ class HexJukeboxMenu extends HexMenuState
 			getItemByName("playing").y = getItemByName("select_symbol").y + 8;
 		else
 			getItemByName("playing").y = getItemByName("otherSelect").y + 8;
+			
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B);
+		#end
 	}
 
 	public function select()
@@ -132,7 +136,7 @@ class HexJukeboxMenu extends HexMenuState
 
 	public override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (controls.BACK)
 			switchState(new HexMainMenu(HexMenuState.loadHexMenu("main-menu")));
 		if (!reversePlay)
 		{
@@ -154,7 +158,7 @@ class HexJukeboxMenu extends HexMenuState
 				playingLerp = 0;
 			}
 		}
-		if (FlxG.keys.justPressed.DOWN)
+		if (controls.DOWN_P)
 		{
 			FlxG.sound.play(Paths.sound("scrollMenu"));
 			selectedIndex++;
@@ -162,7 +166,7 @@ class HexJukeboxMenu extends HexMenuState
 				selectedIndex = 0;
 			select();
 		}
-		if (FlxG.keys.justPressed.UP)
+		if (controls.UP_P)
 		{
 			FlxG.sound.play(Paths.sound("scrollMenu"));
 			selectedIndex--;
@@ -171,7 +175,7 @@ class HexJukeboxMenu extends HexMenuState
 			select();
 		}
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (controls.BACK)
 		{
 			if (selectedIndex <= 4)
 				getItemByName("playing").y = getItemByName("select_symbol").y + 8;

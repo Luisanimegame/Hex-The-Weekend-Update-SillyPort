@@ -22,6 +22,10 @@ class HexGalleryMenu extends HexMenuState
 		superCreate();
 		super.create();
 		Items.members.remove(getItemByName("bg"));
+		
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B);
+		#end
 
 		setVisible(0);
 	}
@@ -88,7 +92,7 @@ class HexGalleryMenu extends HexMenuState
 
 	public override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (controls.BACK)
 			switchState(new HexMainMenu(HexMenuState.loadHexMenu("main-menu")));
 		if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)
 		{
@@ -105,7 +109,7 @@ class HexGalleryMenu extends HexMenuState
 			setVisible(selectedPage == 0 ? 1 : 0);
 		}
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (controls.ACCEPT)
 		{
 			if (zoomedImage != null)
 			{
@@ -123,7 +127,7 @@ class HexGalleryMenu extends HexMenuState
 			tween = FlxTween.tween(zoomedImage, {alpha: 1}, 0.2);
 		}
 
-		if (FlxG.keys.justPressed.DOWN)
+		if (controls.DOWN_P)
 		{
 			if (zoomedImage != null)
 			{
@@ -142,7 +146,7 @@ class HexGalleryMenu extends HexMenuState
 				selectedIndex = 0;
 			select();
 		}
-		if (FlxG.keys.justPressed.UP)
+		if (controls.UP_P)
 		{
 			if (zoomedImage != null)
 			{

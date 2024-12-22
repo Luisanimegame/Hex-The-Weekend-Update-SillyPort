@@ -1270,6 +1270,10 @@ class PlayState extends MusicBeatState
 			camNotes.y = camHUD.y;
 			camNotes.angle = camHUD.angle;
 		}
+		
+		#if mobile
+		addMobileControls();
+		#end
 
 		startingSong = true;
 
@@ -1555,6 +1559,10 @@ class PlayState extends MusicBeatState
 			i.stop();
 
 		Debug.logTrace("appear");
+		
+		#if mobile
+		mobileControls.visible = true;
+		#end
 
 		appearStaticArrows();
 		// generateStaticArrows(0);
@@ -2770,7 +2778,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.screenCenter(X);
 		var pauseBind = FlxKey.fromString(FlxG.save.data.pauseBind);
 		var gppauseBind = FlxKey.fromString(FlxG.save.data.gppauseBind);
-		if ((FlxG.keys.anyJustPressed([pauseBind])) && startedCountdown && canPause && !cannotDie)
+		if ((FlxG.keys.anyJustPressed([pauseBind])) #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause && !cannotDie)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -3857,7 +3865,8 @@ class PlayState extends MusicBeatState
 			GlobalVideo.get().stop();
 			PlayState.instance.remove(PlayState.instance.videoSprite);
 		}
-
+		
+		#if !mobile
 		if (!loadRep)
 			rep.SaveReplay(saveNotes, saveJudge, replayAna);
 		else
@@ -3866,6 +3875,7 @@ class PlayState extends MusicBeatState
 			PlayStateChangeables.scrollSpeed = 1 / songMultiplier;
 			PlayStateChangeables.useDownscroll = false;
 		}
+		#end
 
 		if (FlxG.save.data.fpsCap > 290)
 			(cast(Lib.current.getChildAt(0), Main)).setFPSCap(290);
@@ -3881,6 +3891,9 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
+		#if mobile
+		mobileControls.visible = false;
+		#end
 		FlxG.sound.music.stop();
 		vocals.stop();
 		if (SONG.validScore)
@@ -4476,8 +4489,6 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if ((false && !FlxG.keys.justPressed.ANY))
-		{
 			// PRESSES, check for note hits
 			if (pressArray.contains(true) && generatedMusic)
 			{
@@ -4603,7 +4614,7 @@ class PlayState extends MusicBeatState
 				for (i in anas)
 					if (i != null)
 						replayAna.anaArray.push(i); // put em all there
-		}
+						
 		if (PlayStateChangeables.botPlay)
 			notes.forEachAlive(function(daNote:Note)
 			{

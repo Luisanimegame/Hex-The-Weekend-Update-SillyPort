@@ -125,12 +125,9 @@ class OptionsMenu extends FlxSubState
 				new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),
 				new DownscrollOption("Toggle making the notes scroll down rather than up."),
 				new BotPlay("A bot plays for you!"),
-				#if desktop new FPSCapOption("Change your FPS Cap."),
-				#end
-				new ResetButtonOption("Toggle pressing R to gameover."),
+				desktop new FPSCapOption("Change your FPS Cap."),
 				new InstantRespawn("Toggle if you instantly respawn after dying."),
 				new CamZoomOption("Toggle the camera zoom in-game."),
-				// new OffsetMenu("Get a note offset based off of your inputs!"),
 				new DFJKOption(),
 				new Judgement("Create a custom judgement preset"),
 				new CustomizeGameplay("Drag and drop gameplay modules to your prefered positions!")
@@ -240,6 +237,10 @@ class OptionsMenu extends FlxSubState
 		switchCat(selectedCat);
 
 		selectedOption = selectedCat.options[0];
+		
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B_C);
+		#end
 
 		super.create();
 	}
@@ -355,13 +356,13 @@ class OptionsMenu extends FlxSubState
 		var escape = false;
 
 		accept = FlxG.keys.justPressed.ENTER || (gamepad != null ? gamepad.justPressed.A : false);
-		right = FlxG.keys.justPressed.RIGHT || (gamepad != null ? gamepad.justPressed.DPAD_RIGHT : false);
-		left = FlxG.keys.justPressed.LEFT || (gamepad != null ? gamepad.justPressed.DPAD_LEFT : false);
-		up = FlxG.keys.justPressed.UP || (gamepad != null ? gamepad.justPressed.DPAD_UP : false);
-		down = FlxG.keys.justPressed.DOWN || (gamepad != null ? gamepad.justPressed.DPAD_DOWN : false);
+		right = controls.RIGHT_P || (gamepad != null ? gamepad.justPressed.DPAD_RIGHT : false);
+		left = controls.LEFT_P || (gamepad != null ? gamepad.justPressed.DPAD_LEFT : false);
+		up = controls.UP_P || (gamepad != null ? gamepad.justPressed.DPAD_UP : false);
+		down = controls.DOWN_P || (gamepad != null ? gamepad.justPressed.DPAD_DOWN : false);
 
 		any = FlxG.keys.justPressed.ANY || (gamepad != null ? gamepad.justPressed.ANY : false);
-		escape = FlxG.keys.justPressed.ESCAPE || (gamepad != null ? gamepad.justPressed.B : false);
+		escape = controls.BACK || (gamepad != null ? gamepad.justPressed.B : false);
 
 		if (selectedCat != null && !isInCat)
 		{
@@ -426,6 +427,13 @@ class OptionsMenu extends FlxSubState
 					isInCat = false;
 					selectOption(selectedCat.options[0]);
 				}
+				
+			#if mobile
+			if (virtualPad.buttonC.justPressed) {
+			  removeVirtualPad();
+			  openSubState(new mobile.MobileControlsSubState());
+			}
+			#end
 
 				if (escape)
 				{

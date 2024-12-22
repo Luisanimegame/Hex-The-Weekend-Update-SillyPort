@@ -122,8 +122,20 @@ class HEXDialogueBox extends FlxSpriteGroup // copied I know but fuck you
 			startDialogue();
 			dialogueStarted = true;
 		}
+		
+		#if mobile
+                var justTouched:Bool = false;
 
-		if (FlxG.keys.justPressed.ANY && dialogueStarted == true)
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				justTouched = true;
+			}
+		}
+		#end
+
+		if (FlxG.keys.justPressed.ANY #if mobile || justTouched #end && dialogueStarted == true)
 		{
 			remove(dialogue);
 

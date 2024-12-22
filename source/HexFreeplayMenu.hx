@@ -347,21 +347,25 @@ class HexFreeplayMenu extends HexMenuState
 		RatingText = new FlxText((FlxG.width / 2) - 118, ArtistText.y + 138);
 		RatingText.setFormat(Paths.font("nasalization free.ttf"), 26, FlxColor.fromRGB(21, 21, 38));
 		add(RatingText);
+		
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		move(true, true);
 	}
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (controls.BACK)
 			switchState(new HexMainMenu(HexMenuState.loadHexMenu("main-menu")));
-		if (FlxG.keys.justPressed.LEFT)
+		if (controls.LEFT_P)
 			move(true);
-		if (FlxG.keys.justPressed.RIGHT)
+		if (controls.RIGHT_P)
 			move(false);
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.UP)
+		if (controls.UP_P)
 		{
 			if (selectedIndex >= 5)
 				return;
@@ -383,7 +387,7 @@ class HexFreeplayMenu extends HexMenuState
 			getItemByName("diff").changeOutGraphic("freeplay/difficulty_" + CoolUtil.difficultyFromInt(selectedDiff).toLowerCase());
 		}
 
-		if (FlxG.keys.justPressed.DOWN)
+		if (controls.DOWN_P)
 		{
 			if (selectedIndex >= 5)
 			{
@@ -408,7 +412,7 @@ class HexFreeplayMenu extends HexMenuState
 			getItemByName("diff").changeOutGraphic("freeplay/difficulty_" + CoolUtil.difficultyFromInt(selectedDiff).toLowerCase());
 		}
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (controls.ACCEPT)
 		{
 			if (selectedIndex >= 5 && !bad)
 			{

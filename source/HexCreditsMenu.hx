@@ -23,13 +23,17 @@ class HexCreditsMenu extends HexMenuState
 		Items.members.remove(getItemByName("bg"));
 
 		getItemByName("cameos").visible = false;
+		
+		#if mobile
+		addVirtualPad(LEFT_RIGHT, B);
+		#end
 	}
 
 	public override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (controls.BACK)
 			switchState(new HexMainMenu(HexMenuState.loadHexMenu("main-menu")));
-		if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)
+		if (controls.LEFT_P || controls.RIGHT_P)
 		{
 			FlxG.sound.play(Paths.sound("scrollMenu"));
 			getItemByName("cameos").visible = !getItemByName("cameos").visible;
@@ -77,6 +81,8 @@ class HexCreditsMenu extends HexMenuState
 		{
 			switch (hoveredMenuItem.itemMeta.name)
 			{
+				case "ashley":
+					fancyOpenURL("https://youtube.com/@gabi2wuz?si=N9sBxhHsiQ97F1gG");
 				case "yingIcon":
 					fancyOpenURL("https://www.youtube.com/c/YingYang48");
 				case "kadeIcon":

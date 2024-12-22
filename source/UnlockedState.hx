@@ -11,12 +11,17 @@ class UnlockedState extends MusicBeatState
 		var spr = new FlxSprite(0, 0).loadGraphic(Paths.image(unlockSprite, "hex"));
 		spr.scrollFactor.set();
 		add(spr);
+		
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
+		
 		super.create();
 	}
 
 	public override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.ENTER)
+		if (controls.BACK || controls.ACCEPT)
 		{
 			FlxG.sound.playMusic(Paths.music("freakyMenu"));
 			HexMainMenu.currentSong = "Menu (Remix)";

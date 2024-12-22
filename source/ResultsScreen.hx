@@ -194,8 +194,20 @@ class ResultsScreen extends FlxSubState
 				music.volume += 0.01 * elapsed;
 
 		// keybinds
+		
+		#if mobile
+                var justTouched:Bool = false;
 
-		if (PlayerSettings.player1.controls.ACCEPT)
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				justTouched = true;
+			}
+		}
+		#end
+
+		if (PlayerSettings.player1.controls.ACCEPT #if mobile || justTouched #end)
 		{
 			if (music != null)
 				music.fadeOut(0.3);
