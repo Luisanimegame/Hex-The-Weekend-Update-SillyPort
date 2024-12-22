@@ -54,6 +54,7 @@ jobs:
           haxelib install hxCodec 2.6.1
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib install hscript
+          haxelib git extension-webm https://github.com/Sirox228/extension-webm --quiet
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib install hxcpp-debug-server
           haxelib list
