@@ -1,4 +1,4 @@
-/*import lime.app.Application;
+import lime.app.Application;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.system.debug.log.LogStyle;
@@ -17,7 +17,7 @@ using StringTools;
  * Use these methods to the fullest to produce mods efficiently!
  * 
  * @see https://haxeflixel.com/documentation/debugger/
- */
+ 
 class Debug
 {
 	static final LOG_STYLE_ERROR:LogStyle = new LogStyle('[ERROR] ', 'FF8888', 12, true, false, false, 'flixel/sounds/beep', true);
